@@ -34,7 +34,9 @@
   "paths": {
     "/contacts": {
       "get": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Get list of contacts",
         "operationId": "getContacts",
         "description": "Get list of users with this endpoint",
@@ -77,7 +79,10 @@
             "name": "sortOrder",
             "schema": {
               "type": "string",
-              "enum": ["asc", "desc"],
+              "enum": [
+                "asc",
+                "desc"
+              ],
               "example": "asc"
             }
           },
@@ -86,7 +91,10 @@
             "name": "role",
             "schema": {
               "type": "string",
-              "enum": ["client", "business"],
+              "enum": [
+                "client",
+                "business"
+              ],
               "example": "business"
             }
           }
@@ -98,7 +106,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -166,7 +178,9 @@
         }
       },
       "post": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Create contact",
         "operationId": "createContact",
         "description": "Create a contact with payload",
@@ -214,7 +228,15 @@
                   "role": {
                     "description": "Contact's role",
                     "type": "string",
-                    "enum": ["client", "business"]
+                    "enum": [
+                      "client",
+                      "business"
+                    ]
+                  },
+                  "photo": {
+                    "description": "Link to contact's photo",
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               }
@@ -228,7 +250,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -258,7 +284,9 @@
     },
     "/contacts/{contactId}": {
       "get": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Get contact by id",
         "operationId": "getContact",
         "description": "Get contact by id",
@@ -285,7 +313,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -313,7 +345,9 @@
         }
       },
       "delete": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Delete contact by id",
         "operationId": "deleteContact",
         "description": "Delete contact by id",
@@ -346,7 +380,9 @@
         }
       },
       "patch": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Patch contact by id",
         "operationId": "patchContact",
         "description": "Patch contact by id, and update with payload",
@@ -371,7 +407,12 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["name", "phoneNumber", "email"],
+                "required": [
+                  "name",
+                  "phoneNumber",
+                  "email",
+                  "contactType"
+                ],
                 "properties": {
                   "name": {
                     "description": "Contact's name",
@@ -388,10 +429,24 @@
                     "type": "string",
                     "example": "Lui_Doe123@gmail.com"
                   },
-                  "role": {
-                    "description": "Contact's role",
+                  "isFavourite": {
+                    "description": "Contact's isFavourite",
+                    "type": "boolean",
+                    "example": "isFavourite true"
+                  },
+                  "contactType": {
+                    "description": "Contact's contactType",
                     "type": "string",
-                    "enum": ["client", "business"]
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ]
+                  },
+                  "photo": {
+                    "description": "Link to contact's photo",
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               }
@@ -405,7 +460,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -435,7 +494,9 @@
     },
     "/auth/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Register user",
         "operationId": "createUser",
         "description": "Create a user with payload",
@@ -475,7 +536,11 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["name", "email", "password"],
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "name": {
                     "description": "User's name",
@@ -504,7 +569,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -516,7 +585,9 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": ["accessToken"],
+                      "required": [
+                        "accessToken"
+                      ],
                       "properties": {
                         "accessToken": null,
                         "type": "string",
@@ -547,7 +618,9 @@
     },
     "/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Login a user",
         "operationId": "loginUser",
         "description": "Login a user with payload",
@@ -579,7 +652,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["email", "password"],
+                "required": [
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "email": {
                     "description": "User's email",
@@ -603,7 +679,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -615,7 +695,9 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": ["accessToken"],
+                      "required": [
+                        "accessToken"
+                      ],
                       "properties": {
                         "accessToken": null,
                         "type": "string",
@@ -640,7 +722,9 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Logout user",
         "operationId": "logouthUser",
         "description": "Logout user",
@@ -664,7 +748,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["email"],
+                "required": [
+                  "email"
+                ],
                 "properties": {
                   "email": {
                     "description": "User's email",
@@ -683,7 +769,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -710,7 +800,9 @@
     },
     "/auth/refresh": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Refresh token of user",
         "operationId": "refreshTokenUser",
         "description": "Refresh the user's access token using the refresh token stored in cookies.",
@@ -722,7 +814,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -734,7 +830,9 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": ["accessToken"],
+                      "required": [
+                        "accessToken"
+                      ],
                       "properties": {
                         "accessToken": {
                           "type": "string",
@@ -758,7 +856,9 @@
     },
     "/bookings": {
       "post": {
-        "tags": ["Bookings"],
+        "tags": [
+          "Bookings"
+        ],
         "summary": "Create a booking",
         "operationId": "createBooking",
         "description": "Create a booking for a business user",
@@ -773,7 +873,11 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["businessId", "date", "time"],
+                "required": [
+                  "businessId",
+                  "date",
+                  "time"
+                ],
                 "properties": {
                   "businessId": {
                     "type": "string",
@@ -821,7 +925,9 @@
     },
     "/bookings/me": {
       "get": {
-        "tags": ["Bookings"],
+        "tags": [
+          "Bookings"
+        ],
         "summary": "Get my bookings",
         "operationId": "getMyBookings",
         "description": "Get all bookings for the authenticated client",
@@ -852,7 +958,9 @@
     },
     "/bookings/{id}": {
       "delete": {
-        "tags": ["Bookings"],
+        "tags": [
+          "Bookings"
+        ],
         "summary": "Delete booking",
         "operationId": "deleteBooking",
         "description": "Delete a booking by ID (only the owner can delete)",
@@ -904,7 +1012,9 @@
     },
     "/bookings/{id}/cancel": {
       "patch": {
-        "tags": ["Bookings"],
+        "tags": [
+          "Bookings"
+        ],
         "summary": "Cancel booking",
         "operationId": "cancelBooking",
         "description": "Cancel a booking by ID (status changes to cancelled)",
@@ -955,7 +1065,12 @@
     "schemas": {
       "contact": {
         "type": "object",
-        "required": ["_id", "name", "phoneNumber", "contactType"],
+        "required": [
+          "_id",
+          "name",
+          "phoneNumber",
+          "contactType"
+        ],
         "properties": {
           "_id": {
             "description": "Contact's id",
@@ -977,16 +1092,29 @@
             "type": "string",
             "example": "John_Doe123@gmail.com"
           },
-          "role": {
-            "description": "Contact's role",
+          "contactType": {
+            "description": "Contact's contactType",
             "type": "string",
-            "enum": ["client", "business"]
+            "enum": [
+              "work",
+              "home",
+              "personal"
+            ]
+          },
+          "photo": {
+            "description": "Link to contact's photo",
+            "type": "string",
+            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
           }
         }
       },
       "user": {
         "type": "object",
-        "required": ["name", "email", "password"],
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
         "properties": {
           "name": {
             "description": "User's name",
@@ -1007,7 +1135,14 @@
       },
       "booking": {
         "type": "object",
-        "required": ["id", "clientId", "businessId", "date", "time", "status"],
+        "required": [
+          "id",
+          "clientId",
+          "businessId",
+          "date",
+          "time",
+          "status"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -1034,7 +1169,11 @@
           },
           "status": {
             "type": "string",
-            "enum": ["pending", "confirmed", "cancelled"],
+            "enum": [
+              "pending",
+              "confirmed",
+              "cancelled"
+            ],
             "example": "pending"
           }
         }
@@ -1047,7 +1186,11 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1059,7 +1202,9 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": ["message"],
+                  "required": [
+                    "message"
+                  ],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -1078,7 +1223,11 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1090,7 +1239,9 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": ["message"],
+                  "required": [
+                    "message"
+                  ],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -1109,7 +1260,11 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1121,7 +1276,9 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": ["message"],
+                  "required": [
+                    "message"
+                  ],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -1140,7 +1297,11 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1152,7 +1313,9 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": ["message"],
+                  "required": [
+                    "message"
+                  ],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -1171,7 +1334,11 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "error"],
+              "required": [
+                "status",
+                "message",
+                "error"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",

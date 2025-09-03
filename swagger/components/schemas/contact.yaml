@@ -1,4 +1,3 @@
-
 # swagger/components/schemas/contact.yaml
 
 type: object
@@ -6,7 +5,7 @@ required:
   - _id
   - name
   - phoneNumber
-  - contactType
+  - role
 properties:
   _id:
     description: "Contact's id"
@@ -24,13 +23,7 @@ properties:
     description: "Contact's email"
     type: string
     example: 'John_Doe123@gmail.com'
-  contactType:
-    description: "Contact's contactType"
+  role:
+    description: "Contact's role"
     type: string
-    enum: ['work', 'home', 'personal']
-  photo:
-    description: "Link to contact's photo"
-    type: string
-    example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
-
-
+    enum: [client, business]

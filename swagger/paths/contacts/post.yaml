@@ -41,14 +41,6 @@ requestBody:
             description: "Contact's role"
             type: string
             enum: [client, business]
-          # UserInput:
-          #   type: object
-          #   required: [name, email, password, role]
-          photo:
-            description: "Link to contact's photo"
-            type: string
-            format: binary
-
 responses:
   '201':
     description: Creates a contact
