@@ -1,0 +1,32 @@
+tags:
+  - Bookings
+summary: Delete booking
+operationId: deleteBooking
+description: 'Delete a booking by ID (only the owner can delete)'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: 64adf1c2a1b23cd456ef890a
+responses:
+  '200':
+    description: Booking successfully deleted
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Booking successfully deleted
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'

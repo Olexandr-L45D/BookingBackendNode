@@ -1,0 +1,31 @@
+type: object
+required:
+  - id
+  - clientId
+  - businessId
+  - date
+  - time
+  - status
+properties:
+  id:
+    type: string
+    example: 64adf1c2a1b23cd456ef890a
+  clientId:
+    type: string
+    description: 'ID клієнта'
+    example: 64adf1c2a1b23cd456ef1111
+  businessId:
+    type: string
+    description: 'ID бізнес-користувача'
+    example: 64adf1c2a1b23cd456ef2222
+  date:
+    type: string
+    format: date
+    example: '2025-09-10'
+  time:
+    type: string
+    example: '14:00'
+  status:
+    type: string
+    enum: [pending, confirmed, cancelled]
+    example: pending

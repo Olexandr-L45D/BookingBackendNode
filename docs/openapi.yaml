@@ -1,22 +1,25 @@
-# security: Новий УРЛ: nodejs-hw-mongodb-production.up.railway.app
-  # - bearerAuth: []
+# security: Новий УРЛ: nodejs-production.up.railway.app
+# - bearerAuth: []
 # Цей блок вказує, що для доступу до операції потрібна аутентифікація за допомогою Bearer Token (bearerAuth), який був визначений у /docs/openapi.yaml
 # /docs/openapi.yaml
 
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Contacts app
+  title: Booking API
+  description: API для системи бронювання (користувачі та записи)
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description:
-    This is a documentation of contacts app
+  # description:
+  #   This is a documentation of contacts app
 tags:
   - name: Contacts
     description: Operations about contacts.
   - name: Auth
     description: Auth operations.
+  - name: Bookings
+    description: Керування бронюваннями
 servers:
   - url: http://localhost:3000
   - url: https://nodejs-hw-mongodb-production.up.railway.app
@@ -27,7 +30,7 @@ paths:
       $ref: ../swagger/paths/contacts/get.yaml
     post:
       $ref: ../swagger/paths/contacts/post.yaml
-#додаємо get to id
+  #додаємо get to id
   /contacts/{contactId}:
     get:
       $ref: ../swagger/paths/contacts/{contactId}/get.yaml
@@ -47,18 +50,20 @@ paths:
   /auth/refresh:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
-  /auth/reset-pwd:
+  /bookings:
     post:
-      $ref: ../swagger/paths/auth/reset-pwd.yaml
-  /auth/get-oauth-url:
-    post:
-      $ref: ../swagger/paths/auth/get-oauth-url.yaml
-  /auth/send-reset-email:
-    post:
-      $ref: ../swagger/paths/auth/send-reset-email.yaml
+      $ref: ../swagger/paths/bookings/register.yaml
+  /bookings/me:
+    get:
+      $ref: ../swagger/paths/bookings/me/get.yaml
+  /bookings/{id}:
+    delete:
+      $ref: ../swagger/paths/bookings/{id}/delete.yaml
+  /bookings/{id}/cancel:
+    patch:
+      $ref: ../swagger/paths/bookings/{id}/patch.yaml
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-

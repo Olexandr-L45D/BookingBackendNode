@@ -1,4 +1,3 @@
-
 #/swagger/paths/contacts/post.yaml
 
 tags:
@@ -17,32 +16,38 @@ requestBody:
           - name
           - phoneNumber
           - email
-          - contactType
+          - password
+          - role
         properties:
-          name:
-           description: "Contact's name"
-           type: string
-           example: 'John Doe'
-          phoneNumber:
-           description: "phoneNumber"
-           type: string
-           example: 222-33-11
-          email:
-           description: "Contact's email"
-           type: string
-           example: 'John_Doe123@gmail.com'
-          isFavourite:
-            description: "Contact's isFavourite"
-            type: boolean
-            example: 'isFavourite true'
-          contactType:
-            description: "Contact's contactType"
+          id:
             type: string
-            enum: ['work', 'home', 'personal']
+          name:
+            description: "Contact's name"
+            type: string
+            example: 'John Doe'
+          phoneNumber:
+            description: 'phoneNumber'
+            type: string
+            example: 222-33-11
+          email:
+            description: "Contact's email"
+            type: string
+            example: 'John_Doe123@gmail.com'
+          password:
+            description: "Contact's password"
+            type: string
+            example: 'John123'
+          role:
+            description: "Contact's role"
+            type: string
+            enum: [client, business]
+          # UserInput:
+          #   type: object
+          #   required: [name, email, password, role]
           photo:
-           description: "Link to contact's photo"
-           type: string
-           format: binary
+            description: "Link to contact's photo"
+            type: string
+            format: binary
 
 responses:
   '201':
@@ -69,5 +74,3 @@ responses:
     $ref: '../../components/responses/401.yaml'
   '409':
     $ref: ../../components/responses/409.yaml
-
-

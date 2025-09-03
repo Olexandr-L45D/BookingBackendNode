@@ -12,18 +12,21 @@ parameters:
     name: page
     schema:
       type: integer
-    example: 1
+      example: 1
+      default: 1
   - in: query
     name: perPage
     schema:
       type: integer
       example: 10
+      default: 10
   - in: query
     name: sortBy
     schema:
       type: string
       example: 'name'
-    description: "All contact's fields can be mentioned. Default value - _id"
+      description: "All contact's fields can be mentioned. Default value - _id"
+      default: '_id'
   - in: query
     name: sortOrder
     schema:
@@ -31,16 +34,11 @@ parameters:
       enum: ['asc', 'desc']
       example: 'asc'
   - in: query
-    name: isFavourite
-    schema:
-      type: boolean
-      example: true
-  - in: query
-    name: contactType
+    name: role
     schema:
       type: string
-      enum: ['work', 'home', 'personal']
-      example: home
+      enum: [client, business]
+      example: business
 responses:
   '200':
     description: Successfully found contacts!
@@ -96,4 +94,3 @@ responses:
     $ref: '../../components/responses/401.yaml'
   '404':
     $ref: '../../components/responses/404.yaml'
-

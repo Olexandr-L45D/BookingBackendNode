@@ -6,34 +6,29 @@ import {
   loginUser,
   logoutUser,
   refreshUsersSession,
-  requestResetToken,
-  resetPassword,
   verifyUser,
   createSession,
-  loginOrSignupWithGoogle,
-  confirmEmail,
 } from '../services/auth.js';
-import { generateAuthUrl } from '../utils/googleOAuth2.js';
 
 // const isProduction = process.env.NODE_ENV === 'production';
 // secure: isProduction, // ❌ Локально НЕ буде secure, на проді БУДЕ! Поки коментую бо не працювало
 
-const setupSession = (res, session) => {
-  // const { _id, refreshToken } = session;
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    sameSite: 'None', // ✅ Потрібно для – дозволяє відправляти куки між доменами
-    // secure: isProduction, // ❌ Локально НЕ буде secure, на проді БУДЕ! Поки коментую бо не працювало
-    secure: true, // ✅ Потрібно для HTTPS!  – дозволяє передавати куки тільки через HTTPS
-    expires: new Date(Date.now() + THERTY_DAY),
-  });
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    sameSite: 'None',
-    secure: true,
-    expires: new Date(Date.now() + THERTY_DAY),
-  });
-};
+// const setupSession = (res, session) => {
+//   // const { _id, refreshToken } = session;
+//   res.cookie('refreshToken', session.refreshToken, {
+//     httpOnly: true,
+//     sameSite: 'None', // ✅ Потрібно для – дозволяє відправляти куки між доменами
+//     // secure: isProduction, // ❌ Локально НЕ буде secure, на проді БУДЕ! Поки коментую бо не працювало
+//     secure: true, // ✅ Потрібно для HTTPS!  – дозволяє передавати куки тільки через HTTPS
+//     expires: new Date(Date.now() + THERTY_DAY),
+//   });
+//   res.cookie('sessionId', session._id, {
+//     httpOnly: true,
+//     sameSite: 'None',
+//     secure: true,
+//     expires: new Date(Date.now() + THERTY_DAY),
+//   });
+// };
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -133,24 +128,6 @@ export const refreshUserSessionController = async (req, res) => {
   });
 };
 
-export const requestResetEmailController = async (req, res) => {
-  await requestResetToken(req.body.email);
-  res.json({
-    message: 'Reset password email was successfully sent!',
-    status: 200,
-    data: {},
-  });
-};
-
-export const resetPasswordController = async (req, res) => {
-  await resetPassword(req.body);
-  res.json({
-    message: 'Password was successfully reset!',
-    status: 200,
-    data: {},
-  });
-};
-
 export const verifyController = async (req, res) => {
   const { token } = req.query;
   await verifyUser(token);
@@ -158,41 +135,5 @@ export const verifyController = async (req, res) => {
   res.json({
     status: 200,
     message: 'User verify successfully',
-  });
-};
-
-export const confirmEmailController = async (req, res) => {
-  const session = await confirmEmail(req.body);
-  setupSession(res, session);
-  res.status(200).json({
-    status: 200,
-    message: 'Successfully confirmed email',
-    data: { accessToken: session.accessToken },
-  });
-};
-
-export const getGoogleOAuthUrlController = async (req, res) => {
-  const url = generateAuthUrl();
-  res.json({
-    status: 200,
-    message: 'Successfully get Google OAuth url!',
-    data: { url },
-  });
-};
-
-export const loginWithGoogleController = async (req, res) => {
-  const session = await loginOrSignupWithGoogle(req.body.code);
-
-  res.set({
-    'Access-Control-Allow-Origin':
-      'https://track-rental-auth-react-ts.vercel.app',
-    'Access-Control-Allow-Credentials': 'true',
-  });
-
-  setupSession(res, session);
-  res.json({
-    status: 200,
-    message: 'Successfully logged with Google!',
-    data: { accessToken: session.accessToken },
   });
 };

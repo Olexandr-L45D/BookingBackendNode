@@ -15,10 +15,7 @@ import jwt from 'jsonwebtoken';
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import {
-  getUsernameFromGoogleTokenPayload,
-  validateCode,
-} from '../utils/googleOAuth2.js';
+
 // import { generateActivationToken } from '../utils/generateActivationToken.js';
 
 const appDomain = env('FRONTEND_DOMAIN');
@@ -282,26 +279,4 @@ export const confirmEmail = async (payload) => {
       throw createHttpError(401, 'Token is expired or invalid.');
     throw err;
   }
-};
-
-/* GOOGLE OAUTH */
-export const loginOrSignupWithGoogle = async (code) => {
-  const loginTicket = await validateCode(code);
-  const payload = loginTicket.getPayload();
-  if (!payload) throw createHttpError(401);
-
-  let user = await UsersCollection.findOne({ email: payload.email });
-  if (!user) {
-    const password = await bcrypt.hash(randomBytes(10), 10);
-    user = await UsersCollection.create({
-      email: payload.email,
-      name: getUsernameFromGoogleTokenPayload(payload),
-      password,
-      photo: payload.picture,
-      isActive: true,
-    });
-  }
-
-  const newSession = createSession();
-  return await SessionsCollection.create({ userId: user._id, ...newSession });
 };

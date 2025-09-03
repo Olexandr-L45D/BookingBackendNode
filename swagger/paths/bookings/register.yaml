@@ -1,0 +1,44 @@
+tags:
+  - Bookings
+summary: Create a booking
+operationId: createBooking
+description: 'Create a booking for a business user'
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - businessId
+          - date
+          - time
+        properties:
+          businessId:
+            type: string
+            description: 'ID бізнес-користувача, у якого робимо бронь'
+            example: 64adf1c2a1b23cd456ef890a
+          date:
+            type: string
+            format: date
+            description: 'Дата бронювання'
+            example: '2025-09-10'
+          time:
+            type: string
+            description: 'Час бронювання'
+            example: '14:00'
+responses:
+  '201':
+    description: Booking successfully created
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/booking.yaml'
+  '400':
+    $ref: '../../components/responses/400.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'
