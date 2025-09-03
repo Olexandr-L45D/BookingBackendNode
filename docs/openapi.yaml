@@ -1,0 +1,64 @@
+# security: Новий УРЛ: nodejs-hw-mongodb-production.up.railway.app
+  # - bearerAuth: []
+# Цей блок вказує, що для доступу до операції потрібна аутентифікація за допомогою Bearer Token (bearerAuth), який був визначений у /docs/openapi.yaml
+# /docs/openapi.yaml
+
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Contacts app
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description:
+    This is a documentation of contacts app
+tags:
+  - name: Contacts
+    description: Operations about contacts.
+  - name: Auth
+    description: Auth operations.
+servers:
+  - url: http://localhost:3000
+  - url: https://nodejs-hw-mongodb-production.up.railway.app
+paths:
+  #додаємо get  всих контактів
+  /contacts:
+    get:
+      $ref: ../swagger/paths/contacts/get.yaml
+    post:
+      $ref: ../swagger/paths/contacts/post.yaml
+#додаємо get to id
+  /contacts/{contactId}:
+    get:
+      $ref: ../swagger/paths/contacts/{contactId}/get.yaml
+    delete:
+      $ref: ../swagger/paths/contacts/{contactId}/delete.yaml
+    patch:
+      $ref: ../swagger/paths/contacts/{contactId}/patch.yaml
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh.yaml
+  /auth/reset-pwd:
+    post:
+      $ref: ../swagger/paths/auth/reset-pwd.yaml
+  /auth/get-oauth-url:
+    post:
+      $ref: ../swagger/paths/auth/get-oauth-url.yaml
+  /auth/send-reset-email:
+    post:
+      $ref: ../swagger/paths/auth/send-reset-email.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
