@@ -264,17 +264,8 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "name",
-                  "phoneNumber",
-                  "email",
-                  "password",
-                  "role"
-                ],
+                "required": ["name", "phoneNumber", "email", "role"],
                 "properties": {
-                  "id": {
-                    "type": "string"
-                  },
                   "name": {
                     "description": "Contact's name",
                     "type": "string",
@@ -289,11 +280,6 @@
                     "description": "Contact's email",
                     "type": "string",
                     "example": "John_Doe123@gmail.com"
-                  },
-                  "password": {
-                    "description": "Contact's password",
-                    "type": "string",
-                    "example": "John123"
                   },
                   "role": {
                     "description": "Contact's role",
@@ -320,7 +306,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully created a contact!"
+                      "example": "Contact created successfully"
                     },
                     "data": {
                       "type": "object",
@@ -457,9 +443,9 @@
           }
         }
       },
-      "patch": {
+      "put": {
         "tags": ["Contacts"],
-        "summary": "Patch contact by id",
+        "summary": "Patch & put contact by id",
         "operationId": "patchContact",
         "description": "Patch contact by id, and update with payload",
         "security": [

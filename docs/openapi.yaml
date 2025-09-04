@@ -36,7 +36,7 @@ paths:
       $ref: ../swagger/paths/contacts/{contactId}/get.yaml
     delete:
       $ref: ../swagger/paths/contacts/{contactId}/delete.yaml
-    patch:
+    put:
       $ref: ../swagger/paths/contacts/{contactId}/patch.yaml
   /auth/register:
     post:

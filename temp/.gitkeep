@@ -1,0 +1,16 @@
+{
+  "status": 201,
+  "message": "Successfully created a contact!",
+  "contact": {
+    "name": "Johnaz Doe",
+    "phoneNumber": "222-333-111",
+    "email": "12John_Doe123@gmail.com",
+    "role": "client",
+    "userId": "68b9cdd9622079bd90063025",
+    "_id": "68b9d47535bb4e4420a991ca",
+    "createdAt": "2025-09-04T18:03:33.965Z",
+    "updatedAt": "2025-09-04T18:03:33.965Z",
+    "emai": "987OlenaBas123@gmail.com",
+    "password": "111223Olena"
+  }
+}
