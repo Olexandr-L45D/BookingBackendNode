@@ -9,26 +9,26 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
+  "tags": [
+    {
+      "name": "Contacts",
+      "description": "Operations about contacts ( client and business)"
+    },
+    {
+      "name": "Auth",
+      "description": "Auth operations (authorization in the reservation database)"
+    },
+    {
+      "name": "Bookings",
+      "description": "Management of bookings"
+    }
+  ],
   "servers": [
     {
       "url": "http://localhost:3000"
     },
     {
       "url": "https://nodejs-hw-mongodb-production.up.railway.app"
-    }
-  ],
-  "tags": [
-    {
-      "name": "Contacts",
-      "description": "Operations about contacts."
-    },
-    {
-      "name": "Auth",
-      "description": "Auth operations."
-    },
-    {
-      "name": "Bookings",
-      "description": "Management of bookings"
     }
   ],
   "paths": {
@@ -61,7 +61,7 @@
             "schema": {
               "type": "integer",
               "example": 10,
-              "default": 10
+              "default": 5
             }
           },
           {
@@ -135,7 +135,43 @@
                         "data": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/contact"
+                            "type": "object",
+                            "required": [
+                              "_id",
+                              "name",
+                              "phoneNumber",
+                              "role"
+                            ],
+                            "properties": {
+                              "_id": {
+                                "description": "Contact's id",
+                                "type": "string",
+                                "example": "65e4decdd286b30065d54af9"
+                              },
+                              "name": {
+                                "description": "Contact's name",
+                                "type": "string",
+                                "example": "John Doe"
+                              },
+                              "phoneNumber": {
+                                "description": "Contact's name",
+                                "type": "string",
+                                "example": "222-33-11"
+                              },
+                              "email": {
+                                "description": "Contact's email",
+                                "type": "string",
+                                "example": "John_Doe123@gmail.com"
+                              },
+                              "role": {
+                                "description": "Contact's role",
+                                "type": "string",
+                                "enum": [
+                                  "client",
+                                  "business"
+                                ]
+                              }
+                            }
                           }
                         },
                         "page": {
@@ -170,10 +206,78 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "UnauthorizedError"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "message"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Access token expired"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "$ref": "#/components/responses/404"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "message"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Contact not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -191,7 +295,7 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
@@ -232,11 +336,6 @@
                       "client",
                       "business"
                     ]
-                  },
-                  "photo": {
-                    "description": "Link to contact's photo",
-                    "type": "string",
-                    "format": "binary"
                   }
                 }
               }
@@ -266,7 +365,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/contact"
+                      "$ref": "#/paths/~1contacts/get/responses/200/content/application~1json/schema/properties/data/properties/data/items"
                     }
                   }
                 }
@@ -274,10 +373,44 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           },
           "409": {
-            "$ref": "#/components/responses/409"
+            "description": "Email already in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email already in use"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "message"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Email already in use"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -329,7 +462,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/contact"
+                      "$ref": "#/paths/~1contacts/get/responses/200/content/application~1json/schema/properties/data/properties/data/items"
                     }
                   }
                 }
@@ -337,10 +470,10 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           },
           "404": {
-            "$ref": "#/components/responses/404"
+            "$ref": "#/paths/~1contacts/get/responses/404"
           }
         }
       },
@@ -372,10 +505,10 @@
             "description": "Delete contact by id"
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           },
           "404": {
-            "$ref": "#/components/responses/404"
+            "$ref": "#/paths/~1contacts/get/responses/404"
           }
         }
       },
@@ -404,14 +537,14 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
                   "name",
                   "phoneNumber",
                   "email",
-                  "contactType"
+                  "role"
                 ],
                 "properties": {
                   "name": {
@@ -429,24 +562,13 @@
                     "type": "string",
                     "example": "Lui_Doe123@gmail.com"
                   },
-                  "isFavourite": {
-                    "description": "Contact's isFavourite",
-                    "type": "boolean",
-                    "example": "isFavourite true"
-                  },
-                  "contactType": {
-                    "description": "Contact's contactType",
+                  "role": {
+                    "description": "Contact's role",
                     "type": "string",
                     "enum": [
-                      "work",
-                      "home",
-                      "personal"
+                      "client",
+                      "business"
                     ]
-                  },
-                  "photo": {
-                    "description": "Link to contact's photo",
-                    "type": "string",
-                    "format": "binary"
                   }
                 }
               }
@@ -476,7 +598,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/contact"
+                      "$ref": "#/paths/~1contacts/get/responses/200/content/application~1json/schema/properties/data/properties/data/items"
                     }
                   }
                 }
@@ -484,10 +606,10 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           },
           "404": {
-            "$ref": "#/components/responses/404"
+            "$ref": "#/paths/~1contacts/get/responses/404"
           }
         }
       }
@@ -597,7 +719,7 @@
                           "example": "d9H4sXl8AqP5oC2mJZvTNlGuK03xM1rLtWOKFbY7"
                         }
                       },
-                      "$ref": "#/components/schemas/user"
+                      "$ref": "#/paths/~1auth~1login/post/responses/200/content/application~1json/schema/properties/data"
                     }
                   }
                 }
@@ -605,13 +727,13 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           },
           "409": {
-            "$ref": "#/components/responses/409"
+            "$ref": "#/paths/~1contacts/post/responses/409"
           },
           "500": {
-            "$ref": "#/components/responses/500"
+            "$ref": "#/paths/~1auth~1refresh/post/responses/500"
           }
         }
       }
@@ -706,8 +828,7 @@
                           "type": "string",
                           "example": "d9H4sXl8AqP5oC2mJZvTNlGuK03xM1rLtWOKFbY7"
                         }
-                      },
-                      "$ref": "#/components/schemas/user"
+                      }
                     }
                   }
                 }
@@ -715,7 +836,7 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           }
         }
       }
@@ -785,7 +906,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/user"
+                      "$ref": "#/paths/~1auth~1login/post/responses/200/content/application~1json/schema/properties/data"
                     }
                   }
                 }
@@ -793,7 +914,7 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           }
         }
       }
@@ -846,10 +967,37 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           },
           "500": {
-            "$ref": "#/components/responses/500"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 500
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "InternalServerError"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Detailed error message for debugging purposes.",
+                      "example": "Unexpected database error occurred"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -906,19 +1054,95 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/booking"
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "clientId",
+                    "businessId",
+                    "date",
+                    "time",
+                    "status"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "64adf1c2a1b23cd456ef890a"
+                    },
+                    "clientId": {
+                      "type": "string",
+                      "description": "ID клієнта",
+                      "example": "64adf1c2a1b23cd456ef1111"
+                    },
+                    "businessId": {
+                      "type": "string",
+                      "description": "ID бізнес-користувача",
+                      "example": "64adf1c2a1b23cd456ef2222"
+                    },
+                    "date": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2025-09-10"
+                    },
+                    "time": {
+                      "type": "string",
+                      "example": "14:00"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "confirmed",
+                        "cancelled"
+                      ],
+                      "example": "pending"
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "$ref": "#/components/responses/400"
+            "description": "BadRequestError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "BadRequestError"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "message"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Bad request"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           },
           "404": {
-            "$ref": "#/components/responses/404"
+            "$ref": "#/paths/~1contacts/get/responses/404"
           }
         }
       }
@@ -944,14 +1168,14 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/booking"
+                    "$ref": "#/paths/~1bookings/post/responses/201/content/application~1json/schema"
                   }
                 }
               }
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           }
         }
       }
@@ -1002,10 +1226,10 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           },
           "404": {
-            "$ref": "#/components/responses/404"
+            "$ref": "#/paths/~1contacts/get/responses/404"
           }
         }
       }
@@ -1040,16 +1264,107 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/booking"
+                  "$ref": "#/paths/~1bookings/post/responses/201/content/application~1json/schema"
                 }
               }
             }
           },
+          "400": {
+            "$ref": "#/paths/~1bookings/post/responses/400"
+          },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/paths/~1contacts/get/responses/401"
           },
           "404": {
-            "$ref": "#/components/responses/404"
+            "$ref": "#/paths/~1contacts/get/responses/404"
+          }
+        }
+      }
+    },
+    "/bookings/{id}/update": {
+      "patch": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Update booking",
+        "operationId": "updateBooking",
+        "description": "Update booking details (time, contact info, number, etc.)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "time": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-09-10T14:00:00Z"
+                  },
+                  "contact": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "example": "+380501234567"
+                  },
+                  "tableNumber": {
+                    "type": "integer",
+                    "example": 12
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Booking updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Booking updated successfully"
+                    },
+                    "data": {
+                      "$ref": "#/paths/~1bookings/post/responses/201/content/application~1json/schema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/paths/~1bookings/post/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1contacts/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1contacts/get/responses/404"
           }
         }
       }
@@ -1060,303 +1375,6 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
-      }
-    },
-    "schemas": {
-      "contact": {
-        "type": "object",
-        "required": [
-          "_id",
-          "name",
-          "phoneNumber",
-          "contactType"
-        ],
-        "properties": {
-          "_id": {
-            "description": "Contact's id",
-            "type": "string",
-            "example": "65e4decdd286b30065d54af9"
-          },
-          "name": {
-            "description": "Contact's name",
-            "type": "string",
-            "example": "John Doe"
-          },
-          "phoneNumber": {
-            "description": "Contact's name",
-            "type": "string",
-            "example": "222-33-11"
-          },
-          "email": {
-            "description": "Contact's email",
-            "type": "string",
-            "example": "John_Doe123@gmail.com"
-          },
-          "contactType": {
-            "description": "Contact's contactType",
-            "type": "string",
-            "enum": [
-              "work",
-              "home",
-              "personal"
-            ]
-          },
-          "photo": {
-            "description": "Link to contact's photo",
-            "type": "string",
-            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
-          }
-        }
-      },
-      "user": {
-        "type": "object",
-        "required": [
-          "name",
-          "email",
-          "password"
-        ],
-        "properties": {
-          "name": {
-            "description": "User's name",
-            "type": "string",
-            "example": "John Doe"
-          },
-          "email": {
-            "description": "User's email",
-            "type": "string",
-            "example": "Jonni_Do13@gmail.com"
-          },
-          "password": {
-            "description": "User's password",
-            "type": "string",
-            "example": "2221Li"
-          }
-        }
-      },
-      "booking": {
-        "type": "object",
-        "required": [
-          "id",
-          "clientId",
-          "businessId",
-          "date",
-          "time",
-          "status"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "example": "64adf1c2a1b23cd456ef890a"
-          },
-          "clientId": {
-            "type": "string",
-            "description": "ID клієнта",
-            "example": "64adf1c2a1b23cd456ef1111"
-          },
-          "businessId": {
-            "type": "string",
-            "description": "ID бізнес-користувача",
-            "example": "64adf1c2a1b23cd456ef2222"
-          },
-          "date": {
-            "type": "string",
-            "format": "date",
-            "example": "2025-09-10"
-          },
-          "time": {
-            "type": "string",
-            "example": "14:00"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "pending",
-              "confirmed",
-              "cancelled"
-            ],
-            "example": "pending"
-          }
-        }
-      }
-    },
-    "responses": {
-      "400": {
-        "description": "BadRequestError",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 400
-                },
-                "message": {
-                  "type": "string",
-                  "example": "BadRequestError"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Bad request"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "401": {
-        "description": "Unauthorized error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 401
-                },
-                "message": {
-                  "type": "string",
-                  "example": "UnauthorizedError"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Access token expired"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "404": {
-        "description": "Not found",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 404
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Not found"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Contact not found"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "409": {
-        "description": "Email already in use",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 409
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Email already in use"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Email already in use"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "500": {
-        "description": "Internal Server Error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 500
-                },
-                "message": {
-                  "type": "string",
-                  "example": "InternalServerError"
-                },
-                "error": {
-                  "type": "string",
-                  "description": "Detailed error message for debugging purposes.",
-                  "example": "Unexpected database error occurred"
-                }
-              }
-            }
-          }
-        }
       }
     }
   }

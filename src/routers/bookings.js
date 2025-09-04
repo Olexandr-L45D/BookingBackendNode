@@ -4,6 +4,7 @@ import {
   getMyBookings,
   deleteBooking,
   cancelBooking,
+  updateBooking,
 } from '../controllers/bookingsController.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
@@ -23,6 +24,8 @@ bookingsRouter.delete('/:id', deleteBooking);
 
 // Відмінити бронювання
 bookingsRouter.patch('/:id/cancel', cancelBooking);
+// Змінити данні по бронюванню
+bookingsRouter.patch('/:id/update', updateBooking);
 // Створити нове бронювання
 // bookingsRouter.post('/', authMiddleware, createBooking);
 

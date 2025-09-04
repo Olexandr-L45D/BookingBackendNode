@@ -15,9 +15,9 @@ info:
   #   This is a documentation of contacts app
 tags:
   - name: Contacts
-    description: Operations about contacts.
+    description: Operations about contacts ( client and business)
   - name: Auth
-    description: Auth operations.
+    description: Auth operations (authorization in the reservation database)
   - name: Bookings
     description: Management of bookings
 servers:
@@ -62,6 +62,9 @@ paths:
   /bookings/{id}/cancel:
     patch:
       $ref: ../swagger/paths/bookings/{id}/patch.yaml
+  /bookings/{id}/update:
+    patch:
+      $ref: ../swagger/paths/bookings/{id}/update.yaml
 components:
   securitySchemes:
     bearerAuth:

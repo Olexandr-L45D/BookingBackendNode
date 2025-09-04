@@ -33,17 +33,17 @@ requestBody:
           - password
         properties:
           name:
-           description: "User's name"
-           type: string
-           example: 'John Doe'
+            description: "User's name"
+            type: string
+            example: 'John Doe'
           email:
-           description: "User's email"
-           type: string
-           example: 'John_Doe123@gmail.com'
+            description: "User's email"
+            type: string
+            example: 'John_Doe123@gmail.com'
           password:
-           description: "password"
-           type: string
-           example: '111223Jn'
+            description: 'password'
+            type: string
+            example: '111223Jn'
 
 responses:
   '201':
@@ -81,6 +81,3 @@ responses:
     $ref: '../../components/responses/409.yaml'
   '500':
     $ref: '../../components/responses/500.yaml'
-
-
-
