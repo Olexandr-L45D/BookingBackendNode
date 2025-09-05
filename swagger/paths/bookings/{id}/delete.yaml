@@ -11,6 +11,7 @@ parameters:
     required: true
     schema:
       type: string
+      description: Booking ID
       example: 64adf1c2a1b23cd456ef890a
 responses:
   '200':
@@ -26,7 +27,11 @@ responses:
             message:
               type: string
               example: Booking successfully deleted
+  '400':
+    $ref: '../../../components/responses/400.yaml'
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':
     $ref: '../../../components/responses/404.yaml'
+  '500':
+    description: Server error

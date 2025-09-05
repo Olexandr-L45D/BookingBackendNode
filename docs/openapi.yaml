@@ -20,6 +20,8 @@ tags:
     description: Auth operations (authorization in the reservation database)
   - name: Bookings
     description: Management of bookings
+security:
+  - bearerAuth: []
 servers:
   - url: http://localhost:3000
   - url: https://nodejs-hw-mongodb-production.up.railway.app
@@ -70,3 +72,4 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT

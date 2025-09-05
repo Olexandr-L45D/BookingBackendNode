@@ -1055,6 +1055,7 @@
             "required": true,
             "schema": {
               "type": "string",
+              "description": "Booking ID",
               "example": "64adf1c2a1b23cd456ef890a"
             }
           }
@@ -1085,6 +1086,9 @@
           },
           "404": {
             "$ref": "#/paths/~1contacts/get/responses/404"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
@@ -1225,7 +1229,8 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

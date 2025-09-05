@@ -16,6 +16,8 @@ const PORT = Number(env('PORT', '3000'));
 export const setupServer = async () => {
   const app = express();
 
+  app.use(cors()); // швидко дозволити все під час розробки
+
   app.use((req, res, next) => {
     res.header('Referrer-Policy', 'no-referrer-when-downgrade');
     res.header('Access-Control-Allow-Credentials', 'true');
@@ -23,38 +25,48 @@ export const setupServer = async () => {
   });
 
   //  Додаємо CORS перед `cookieParser`
-  app.use(
-    cors({
-      origin: [
-        env('APP_DOMAIN'),
-        'https://booking-auth-react.vercel.app', // замінити УРЛ на урл фронтенда для бронювання
-        'http://localhost:5173',
-        'http://localhost:5175',
-        'http://localhost:5176',
-      ],
-      credentials: true, // Дозволяє передавати cookies та токени
-      allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'], // Дозволені заголовки
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // Дозволені методи
-    }),
-  );
+  // тимчасово коментую = app.use(
+  // cors({
+  //   origin: [
+  //     env('APP_DOMAIN'),
+  //     для тестів а потім повертаю з реальним задеплоїним УРЛ фронтенда
+
+  // app.use(
+  //   cors({
+  //     origin: [
+  //       env('APP_DOMAIN'),
+  //       // замінити перший УРЛ =  'https://booking-auth-react.vercel.app' на урл фронтенда для бронювання
+  //       // 'https://booking-auth-react.vercel.app',
+  //       'http://localhost:5173',
+  //       'http://localhost:5175',
+  //       'http://localhost:5176',
+  //     ],
+  //     credentials: true, // Дозволяє передавати cookies та токени
+  //     allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'], // Дозволені заголовки
+  //     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // Дозволені методи
+  //   }),
+  // );
 
   app.use(cookieParser()); //  `cookieParser()` після `cors()`
 
   //  Preflight запити теж з `credentials: true`
-  app.options(
-    '*',
-    cors({
-      origin: [
-        'https://booking-auth-react.vercel.app', // замінити УРЛ на урл фронтенда для бронювання
-        'http://localhost:5173',
-        'http://localhost:5175',
-        'http://localhost:5176',
-      ],
-      credentials: true,
-      allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'],
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    }),
-  );
+  // тимчасово коментую для тестів а потім повертаю з реальним задеплоїним УРЛ фронтенда
+
+  // app.options(
+  //   '*',
+  //   cors({
+  //     origin: [
+  //       // замінити перший УРЛ =  'https://booking-auth-react.vercel.app' на урл фронтенда для бронювання
+  //       // 'https://booking-auth-react.vercel.app',
+  //       'http://localhost:5173',
+  //       'http://localhost:5175',
+  //       'http://localhost:5176',
+  //     ],
+  //     credentials: true,
+  //     allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'],
+  //     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  //   }),
+  // );
 
   app.use(
     express.json({

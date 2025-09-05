@@ -2,10 +2,10 @@ import createHttpError from 'http-errors';
 import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import {
-  FIFTEEN_MINUTES,
+  THIRTY_MINUTES,
   SMTP,
   TEMPLATES_DIR,
-  THERTY_DAY,
+  THIRTY_DAY,
 } from '../constants/index.js';
 import { SessionsCollection } from '../db/models/session.js';
 import { UsersCollection } from '../db/models/user.js';
@@ -27,8 +27,8 @@ export const createSession = () => {
   return {
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + THERTY_DAY),
+    accessTokenValidUntil: new Date(Date.now() + THIRTY_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAY),
   };
 };
 

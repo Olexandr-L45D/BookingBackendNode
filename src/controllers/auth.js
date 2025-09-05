@@ -1,4 +1,4 @@
-import { THERTY_DAY } from '../constants/index.js';
+import { THIRTY_DAY } from '../constants/index.js';
 import { SessionsCollection } from '../db/models/session.js';
 
 import {
@@ -20,13 +20,13 @@ import {
 //     sameSite: 'None', // ✅ Потрібно для – дозволяє відправляти куки між доменами
 //     // secure: isProduction, // ❌ Локально НЕ буде secure, на проді БУДЕ! Поки коментую бо не працювало
 //     secure: true, // ✅ Потрібно для HTTPS!  – дозволяє передавати куки тільки через HTTPS
-//     expires: new Date(Date.now() + THERTY_DAY),
+//     expires: new Date(Date.now() + THIRTY_DAY),
 //   });
 //   res.cookie('sessionId', session._id, {
 //     httpOnly: true,
 //     sameSite: 'None',
 //     secure: true,
-//     expires: new Date(Date.now() + THERTY_DAY),
+//     expires: new Date(Date.now() + THIRTY_DAY),
 //   });
 // };
 
@@ -48,13 +48,13 @@ export const registerUserController = async (req, res) => {
     httpOnly: true,
     sameSite: 'None',
     secure: true,
-    expires: new Date(Date.now() + THERTY_DAY),
+    expires: new Date(Date.now() + THIRTY_DAY),
   });
   res.cookie('sessionId', session._id, {
     httpOnly: true,
     sameSite: 'None',
     secure: true,
-    expires: new Date(Date.now() + THERTY_DAY),
+    expires: new Date(Date.now() + THIRTY_DAY),
   });
 
   // Відправляємо відповідь з accessToken
@@ -74,13 +74,13 @@ export const loginUserController = async (req, res) => {
     httpOnly: true,
     sameSite: 'None',
     secure: true,
-    expires: new Date(Date.now() + THERTY_DAY),
+    expires: new Date(Date.now() + THIRTY_DAY),
   });
   res.cookie('sessionId', session._id, {
     httpOnly: true,
     sameSite: 'None',
     secure: true,
-    expires: new Date(Date.now() + THERTY_DAY),
+    expires: new Date(Date.now() + THIRTY_DAY),
   });
   res.status(200).json({
     status: 200,
@@ -110,13 +110,13 @@ export const refreshUserSessionController = async (req, res) => {
     httpOnly: true,
     sameSite: 'None',
     secure: true,
-    expires: new Date(Date.now() + THERTY_DAY),
+    expires: new Date(Date.now() + THIRTY_DAY),
   });
   res.cookie('sessionId', session._id, {
     httpOnly: true,
     sameSite: 'None',
     secure: true,
-    expires: new Date(Date.now() + THERTY_DAY),
+    expires: new Date(Date.now() + THIRTY_DAY),
   });
 
   res.json({

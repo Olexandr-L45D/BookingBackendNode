@@ -52,7 +52,7 @@ export const deleteBooking = async (req, res) => {
     if (booking.clientId.toString() !== req.user.id)
       return res.status(401).json({ status: 401, message: 'Unauthorized' });
 
-    await booking.remove();
+    await booking.deleteOne();
 
     res
       .status(200)
