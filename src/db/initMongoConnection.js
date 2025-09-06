@@ -7,18 +7,50 @@ import { env } from '../utils/env.js';
 
 export const initMongoConnection = async () => {
   try {
-    const mongoUri = env('MONGODB_URI'); // беремо повний URI з .env
-    await mongoose.connect(mongoUri, {
-      dbName: env('MONGODB_DB'),
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('MongoDB connection successfully established!');
+    const mongoUri = env('MONGODB_URI'); // просто повний URI з Env
+
+    await mongoose.connect(mongoUri); // без deprecated опцій
+    console.log('MongoDB connected successfully!');
   } catch (e) {
     console.error('Error while setting up mongo connection!', e);
     throw e;
   }
 };
+
+// import mongoose from 'mongoose';
+// import { env } from '../utils/env.js';
+
+// export const initMongoConnection = async () => {
+//   try {
+//     const mongoUri = env('MONGODB_URI'); // беремо готовий URI
+//     await mongoose.connect(mongoUri, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+//     console.log('MongoDB connected successfully!');
+//   } catch (e) {
+//     console.error('Error connecting to MongoDB:', e);
+//     throw e;
+//   }
+// };
+
+// import mongoose from 'mongoose';
+// import { env } from '../utils/env.js';
+
+// export const initMongoConnection = async () => {
+//   try {
+//     const mongoUri = env('MONGODB_URI'); // беремо повний URI з .env
+//     await mongoose.connect(mongoUri, {
+//       dbName: env('MONGODB_DB'),
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+//     console.log('MongoDB connection successfully established!');
+//   } catch (e) {
+//     console.error('Error while setting up mongo connection!', e);
+//     throw e;
+//   }
+// };
 
 // import mongoose from 'mongoose';
 // import { env } from '../utils/env.js';
