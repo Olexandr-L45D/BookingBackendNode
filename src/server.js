@@ -31,7 +31,9 @@ export const setupServer = async () => {
       origin: [
         env('APP_DOMAIN'),
         // замінив перший УРЛ =>   на YRL задеплоїного на VERCEL фронтенда для бронювання
+        'https://bookingbackendnode.onrender.com',
         'https://booking-frontend-react.vercel.app/',
+        'http://localhost:3000',
         'http://localhost:5173',
         'http://localhost:5175',
         'http://localhost:5176',
@@ -51,7 +53,9 @@ export const setupServer = async () => {
     cors({
       origin: [
         // замінив перший УРЛ =>   на YRL задеплоїного на VERCEL фронтенда для бронювання
+        'https://bookingbackendnode.onrender.com',
         'https://booking-frontend-react.vercel.app/',
+        'http://localhost:3000',
         'http://localhost:5173',
         'http://localhost:5175',
         'http://localhost:5176',

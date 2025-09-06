@@ -28,7 +28,7 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://nodejs-hw-mongodb-production.up.railway.app"
+      "url": "https://bookingbackendnode.onrender.com"
     }
   ],
   "paths": {
