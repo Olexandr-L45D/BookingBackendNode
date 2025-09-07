@@ -16,35 +16,24 @@ const PORT = Number(env('PORT', '3000'));
 export const setupServer = async () => {
   const app = express();
 
-  // app.use(cors()); // швидко дозволити все під час розробки
-
-  app.use((req, res, next) => {
-    res.header('Referrer-Policy', 'no-referrer-when-downgrade');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    next();
-  });
-
-  //  Додаємо CORS перед `cookieParser`
-
   app.use(
     cors({
       origin: [
         env('APP_DOMAIN'),
-        // замінив перший УРЛ =>   на YRL задеплоїного на VERCEL фронтенда для бронювання
-        'https://bookingbackendnode.onrender.com',
-        'https://booking-frontend-react.vercel.app/',
+        'https://booking-frontend-react.vercel.app',
         'http://localhost:3000',
         'http://localhost:5173',
+        'http://localhost:5174',
         'http://localhost:5175',
         'http://localhost:5176',
       ],
-      credentials: true, // Дозволяє передавати cookies та токени
-      allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'], // Дозволені заголовки
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // Дозволені методи
+      credentials: true,
+      allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     }),
   );
 
-  app.use(cookieParser()); //  `cookieParser()` після `cors()`
+  app.use(cookieParser());
 
   //  Preflight запити теж з `credentials: true`
 
@@ -57,6 +46,7 @@ export const setupServer = async () => {
         'https://booking-frontend-react.vercel.app/',
         'http://localhost:3000',
         'http://localhost:5173',
+        'http://localhost:5174',
         'http://localhost:5175',
         'http://localhost:5176',
       ],
@@ -65,6 +55,11 @@ export const setupServer = async () => {
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     }),
   );
+  app.use((req, res, next) => {
+    res.header('Referrer-Policy', 'no-referrer-when-downgrade');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+  });
 
   app.use(
     express.json({
