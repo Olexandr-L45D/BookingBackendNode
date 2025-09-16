@@ -2,7 +2,7 @@ tags:
   - Bookings
 summary: Update booking
 operationId: updateBooking
-description: Update booking details (time, contact info, number, etc.)
+description: Update booking details (date, time, status, etc.)
 security:
   - bearerAuth: []
 parameters:
@@ -18,19 +18,19 @@ requestBody:
       schema:
         type: object
         properties:
+          date:
+            type: string
+            format: date
+            description: 'Дата бронювання'
+            example: '2025-09-10'
           time:
             type: string
-            format: date-time
-            example: '2025-09-10T14:00:00Z'
-          contact:
+            description: 'Час бронювання'
+            example: '14:00'
+          status:
             type: string
-            example: 'John Doe'
-          phoneNumber:
-            type: string
-            example: '+380501234567'
-          tableNumber:
-            type: integer
-            example: 12
+            description: 'статус бронювання'
+            example: 'confirmed'
 responses:
   '200':
     description: Booking updated successfully

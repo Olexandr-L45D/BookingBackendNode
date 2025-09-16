@@ -1166,22 +1166,23 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "64adf1c2a1b23cd456ef890a"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2025-09-10"
+                  },
                   "time": {
                     "type": "string",
-                    "format": "date-time",
-                    "example": "2025-09-10T14:00:00Z"
+                    "example": "14:00"
                   },
-                  "contact": {
+                  "status": {
                     "type": "string",
-                    "example": "John Doe"
-                  },
-                  "phoneNumber": {
-                    "type": "string",
-                    "example": "+380501234567"
-                  },
-                  "tableNumber": {
-                    "type": "integer",
-                    "example": 12
+                    "enum": ["pending", "confirmed", "cancelled"],
+                    "example": "pending"
                   }
                 }
               }
