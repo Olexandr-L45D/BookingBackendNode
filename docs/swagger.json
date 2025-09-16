@@ -905,19 +905,19 @@
                     "type": "string",
                     "format": "date",
                     "description": "Дата бронювання",
-                    "example": "2025-09-10"
+                    "example": "2025-09-18T00:00:000Z"
                   },
                   "time": {
                     "type": "string",
                     "format": "date-time",
                     "description": "Час бронювання",
-                    "example": "14:00"
+                    "example": "2025-09-18T14:00:000Z"
                   },
                   "endTime": {
                     "type": "string",
                     "format": "date-time",
                     "description": "End time of booking (auto-calculated as time + 30min)",
-                    "example": "14:30"
+                    "example": "2025-09-18T14:30:000Z"
                   }
                 }
               }
@@ -957,18 +957,18 @@
                     "date": {
                       "type": "string",
                       "format": "date",
-                      "example": "2025-09-18T00:00:00Z"
+                      "example": "2025-09-18T00:00:000Z"
                     },
                     "time": {
                       "type": "string",
                       "format": "date-time",
-                      "example": "2025-09-18T14:00:00Z"
+                      "example": "2025-09-18T14:00:000Z"
                     },
                     "endTime": {
                       "type": "string",
                       "format": "date-time",
                       "description": "End time of booking (auto-calculated as time + 30min)",
-                      "example": "2025-09-18T14:30:00Z"
+                      "example": "2025-09-18T14:30:000Z"
                     },
                     "status": {
                       "type": "string",
@@ -1187,18 +1187,18 @@
                   "date": {
                     "type": "string",
                     "format": "date",
-                    "example": "2025-09-18T00:00:00Z"
+                    "example": "2025-09-18T00:00:000Z"
                   },
                   "time": {
                     "type": "string",
                     "format": "date-time",
-                    "example": "2025-09-18T14:00:00Z"
+                    "example": "2025-09-18T14:00:000Z"
                   },
                   "endTime": {
                     "type": "string",
                     "format": "date-time",
                     "description": "End time of booking (auto-calculated as time + 30min)",
-                    "example": "2025-09-18T14:30:00Z"
+                    "example": "2025-09-18T14:30:000Z"
                   },
                   "status": {
                     "type": "string",

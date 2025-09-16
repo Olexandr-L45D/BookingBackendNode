@@ -1,27 +1,5 @@
 import { Booking } from '../db/models/booking.js';
-// Створити нове бронювання
-// export const createBooking = async (req, res) => {
-//   try {
-//     const { businessId, date, time } = req.body;
-//     const clientId = req.user.id; // беремо з auth middleware
 
-//     const newBooking = await Booking.create({
-//       clientId,
-//       businessId,
-//       date,
-//       time,
-//     });
-
-//     res.status(201).json({
-//       status: 201,
-//       message: 'Booking successfully created',
-//       data: newBooking,
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ status: 500, message: 'Server error' });
-//   }
-// };
 export const createBooking = async (req, res) => {
   try {
     const { businessId, date, time, endTime } = req.body;
@@ -121,42 +99,6 @@ export const cancelBooking = async (req, res) => {
     res.status(500).json({ status: 500, message: 'Server error' });
   }
 };
-
-// // Оновити дані існуючого бронювання
-// export const updateBooking = async (req, res) => {
-//   try {
-//     const bookingId = req.params.id; // id з URL (/bookings/:id/update)
-//     const clientId = req.user.id; // id юзера з токена (auth middleware)
-//     const { businessId, date, time } = req.body; // дані, які можна оновити
-
-//     // Шукаємо бронювання і перевіряємо, чи воно належить цьому користувачу
-//     const booking = await Booking.findOne({ _id: bookingId, clientId });
-
-//     if (!booking) {
-//       return res.status(404).json({
-//         status: 404,
-//         message: 'Booking not found or you do not have permission',
-//       });
-//     }
-
-//     // Оновлюємо тільки ті поля, які передані у body
-//     if (businessId) booking.businessId = businessId;
-//     if (date) booking.date = date;
-//     if (time) booking.time = time;
-
-//     // Зберігаємо зміни
-//     const updatedBooking = await booking.save();
-
-//     res.status(200).json({
-//       status: 200,
-//       message: 'Booking successfully updated',
-//       data: updatedBooking,
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ status: 500, message: 'Server error' });
-//   }
-// };
 
 // Оновити дані існуючого бронювання
 export const updateBooking = async (req, res) => {

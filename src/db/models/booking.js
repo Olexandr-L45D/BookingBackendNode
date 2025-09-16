@@ -3,10 +3,10 @@ import { model, Schema } from 'mongoose';
 
 const bookingSchema = new Schema(
   {
-    clientId: { type: String, requirerd: true },
-    businessId: { type: String, requirerd: true },
-    date: { type: Date, requirerd: true },
-    time: { type: Date, requirerd: true },
+    clientId: { type: String, required: true },
+    businessId: { type: String, required: true },
+    date: { type: Date, required: true },
+    time: { type: Date, required: true },
     endTime: {
       type: Date,
       required: true,
