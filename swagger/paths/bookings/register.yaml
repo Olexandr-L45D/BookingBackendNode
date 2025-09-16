@@ -24,11 +24,17 @@ requestBody:
             type: string
             format: date
             description: 'Дата бронювання'
-            example: '2025-09-10'
+            example: '2025-09-18T00:00:00Z'
           time:
             type: string
+            format: date-time
             description: 'Час бронювання'
-            example: '14:00'
+            example: '2025-09-18T14:00:00Z'
+          endTime:
+            type: string
+            format: date-time
+            description: 'Кінець періода бронювання'
+            example: '2025-09-18T14:30:00Z'
 responses:
   '201':
     description: Booking successfully created

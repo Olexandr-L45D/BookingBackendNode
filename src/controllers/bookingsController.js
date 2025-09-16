@@ -1,15 +1,52 @@
 import { Booking } from '../db/models/booking.js';
 // Створити нове бронювання
+// export const createBooking = async (req, res) => {
+//   try {
+//     const { businessId, date, time } = req.body;
+//     const clientId = req.user.id; // беремо з auth middleware
+
+//     const newBooking = await Booking.create({
+//       clientId,
+//       businessId,
+//       date,
+//       time,
+//     });
+
+//     res.status(201).json({
+//       status: 201,
+//       message: 'Booking successfully created',
+//       data: newBooking,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ status: 500, message: 'Server error' });
+//   }
+// };
 export const createBooking = async (req, res) => {
   try {
-    const { businessId, date, time } = req.body;
+    const { businessId, date, time, endTime } = req.body;
     const clientId = req.user.id; // беремо з auth middleware
+    // перевірка на конфлікт чи є вже бронювання на цей айді та на цей період часу?
+    const isConflict = await Booking.findOne({
+      businessId,
+      date,
+      time: { $lt: endTime }, // початок старого < кінець нового
+      endTime: { $gt: time }, // кінець старого > початок нового
+    });
 
+    if (isConflict) {
+      return res.status(400).json({
+        message: `Цей час вже зайнятий. Оберіть інший після ${isConflict.endTime}`,
+      });
+    }
+
+    // створюю нове бронювання
     const newBooking = await Booking.create({
       clientId,
       businessId,
       date,
       time,
+      endTime,
     });
 
     res.status(201).json({
@@ -85,13 +122,62 @@ export const cancelBooking = async (req, res) => {
   }
 };
 
+// // Оновити дані існуючого бронювання
+// export const updateBooking = async (req, res) => {
+//   try {
+//     const bookingId = req.params.id; // id з URL (/bookings/:id/update)
+//     const clientId = req.user.id; // id юзера з токена (auth middleware)
+//     const { businessId, date, time } = req.body; // дані, які можна оновити
+
+//     // Шукаємо бронювання і перевіряємо, чи воно належить цьому користувачу
+//     const booking = await Booking.findOne({ _id: bookingId, clientId });
+
+//     if (!booking) {
+//       return res.status(404).json({
+//         status: 404,
+//         message: 'Booking not found or you do not have permission',
+//       });
+//     }
+
+//     // Оновлюємо тільки ті поля, які передані у body
+//     if (businessId) booking.businessId = businessId;
+//     if (date) booking.date = date;
+//     if (time) booking.time = time;
+
+//     // Зберігаємо зміни
+//     const updatedBooking = await booking.save();
+
+//     res.status(200).json({
+//       status: 200,
+//       message: 'Booking successfully updated',
+//       data: updatedBooking,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ status: 500, message: 'Server error' });
+//   }
+// };
+
 // Оновити дані існуючого бронювання
 export const updateBooking = async (req, res) => {
   try {
     const bookingId = req.params.id; // id з URL (/bookings/:id/update)
     const clientId = req.user.id; // id юзера з токена (auth middleware)
-    const { businessId, date, time } = req.body; // дані, які можна оновити
+    const { businessId, date, time, endTime } = req.body; // дані, які можна оновити
+    // перевірка на конфлікт чи є вже бронювання на цей айді та на цей період часу?
+    const isConflict = await Booking.findOne({
+      businessId,
+      date,
+      _id: { $ne: bookingId }, // не порівнювати бронювання з самим собою
+      time: { $lt: endTime }, // початок старого < кінець нового
+      endTime: { $gt: time }, // кінець старого > початок нового
+    });
 
+    if (isConflict) {
+      return res.status(400).json({
+        message: `Цей час вже зайнятий. Оберіть інший після ${isConflict.endTime}`,
+      });
+    }
     // Шукаємо бронювання і перевіряємо, чи воно належить цьому користувачу
     const booking = await Booking.findOne({ _id: bookingId, clientId });
 
@@ -106,6 +192,7 @@ export const updateBooking = async (req, res) => {
     if (businessId) booking.businessId = businessId;
     if (date) booking.date = date;
     if (time) booking.time = time;
+    if (endTime) booking.endTime = endTime;
 
     // Зберігаємо зміни
     const updatedBooking = await booking.save();

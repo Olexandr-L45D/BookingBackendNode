@@ -5,8 +5,12 @@ const bookingSchema = new Schema(
   {
     clientId: { type: String, requirerd: true },
     businessId: { type: String, requirerd: true },
-    date: { type: String, requirerd: true },
-    time: { type: String, requirerd: true },
+    date: { type: Date, requirerd: true },
+    time: { type: Date, requirerd: true },
+    endTime: {
+      type: Date,
+      required: true,
+    },
     status: {
       type: String,
       enum: ['pending', 'confirmed', 'cancelled'],
